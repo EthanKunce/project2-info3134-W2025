@@ -1,6 +1,6 @@
 # project2-info3134-W2025
 
-## Author: Ethan Kunce
+## Author(s): Ethan Kunce & Hani Hijazi
 
 ### How to manage Branches on github
 https://github.com/Kunena/Kunena-Forum/wiki/create-a-new-branch-with-git-and-manage-branches
