@@ -1,3 +1,9 @@
+import javax.swing.*;
+
+public class FractionCalculator extends JFrame{
+    
+    
+}
 /*
  * Author:		Ethan Kunce
  * Date:		02 April 2025
