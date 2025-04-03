@@ -4,9 +4,10 @@ import javax.swing.*;
 
 public class FractionCalculator extends JFrame implements ActionListener{
     
-    private JPanel pan1, pan2, pan3, pan4;
-    private JTextField numerTxt, denomTxt;
-    private JButton build, retry;
+    private JPanel fracPanel, operationPanel, selectOperation , operationResult;
+    private JTextField numerator, denominator;
+    private JTextArea fracResult, operResult;
+    private JButton buildFrac, startOver;
     public FractionCalculator()
     {
         //Boilerplate Code
@@ -14,29 +15,38 @@ public class FractionCalculator extends JFrame implements ActionListener{
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(800, 400);
         this.setLocationRelativeTo(null);
-        this.setLayout(new FlowLayout());
+        this.setLayout(new GridLayout(1, 4));
+        
 
-        //Labels + Text for Pan1
-        JLabel fracLabel = new JLabel("Enter a Fraction: ");
-        this.add(fracLabel);
-        pan1 = new JPanel(new GridLayout(1, 4));
-        pan1.add(new JLabel("Numerator"));
-        numerTxt = new JTextField();
-        pan1.add(numerTxt);
+        buildFractionPanel();
+        this.add(fracPanel);
 
-        pan1.add(new JLabel("Denominator"));
-        denomTxt = new JTextField();
-        pan1.add(denomTxt);
+        this.setVisible(true);
+    }
+
+    public void buildFractionPanel()
+    {
+        //Labels/Text for Fraction Panel (1)
+
+        // JLabel fracLabel = new JLabel("Enter a Fraction");
+        fracPanel = new JPanel();
+        fracPanel.setBorder(BorderFactory.createTitledBorder("Enter a fraction: ")); //Testing for a border
+        fracPanel.setLayout(new GridLayout(3,1));
+
+        fracPanel.add(new JLabel("Numerator"));
+        numerator = new JTextField();
+    
+        fracPanel.add(numerator);
+
+        fracPanel.add(new JLabel("Denominator"));
+        denominator = new JTextField(1);
+        fracPanel.add(denominator);
 
         //Buttons
-        build = new JButton("Build Fraction");
-        pan1.add(build);
-        retry = new JButton("Start Over!");
-        pan1.add(retry);
-
-        //Panels
-        this.add(pan1);
-        this.setVisible(true);
+        buildFrac = new JButton("Build Fraction");
+        fracPanel.add(buildFrac);
+        startOver = new JButton("Start Over!");
+        fracPanel.add(startOver);
     }
 
     public static void main(String[] args) {
