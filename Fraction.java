@@ -42,11 +42,74 @@ public class Fraction implements Comparable<Fraction>{
         this.den = den;
     }
 
+    public double toDecimal()
+    {
+        return this.num / (double)this.den;
+    }
+
+    public Fraction toReciprocal()
+    {
+        return new Fraction(this.den, this.num);
+    }
+
+    public Fraction add(Fraction rhs)
+    {
+        int commonD = gcd(this.den, rhs.getDen());
+        Fraction retFraction = new Fraction((commonD * this.num) + (commonD * rhs.getNum()) , (commonD * this.getDen()));
+
+        return retFraction.lowestTerms();
+    }
+
+    public Fraction multiply(Fraction rhs)
+    {
+        return new Fraction(this.num * rhs.getNum(), this.den * rhs.getDen());
+    }
+
+    private int gcd(int den1, int den2)
+    {
+        while(den2 > 0)
+        {
+            int temp = den2;
+            den2 = den1 % den2;
+            den1 = temp;
+        }
+        return den1;
+    }
+
+    public Fraction lowestTerms()
+    {
+        int commonDenominator = gcd(this.num, this.den);
+        return new Fraction(this.num / commonDenominator, this.den / commonDenominator);
+    }
+
+
+    public boolean equals(Fraction rhs)
+    {
+        Fraction lhs = this.lowestTerms();
+        rhs = rhs.lowestTerms();
+        return lhs.num == rhs.num && lhs.den == rhs.den;
+    }
+
+    public boolean greaterThan(Fraction rhs)
+    {
+        return this.toDecimal() > rhs.toDecimal();
+    }   
+
 
     @Override
     public int compareTo(Fraction o) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'compareTo'");
+    }
+
+    @Override
+    public String toString()
+    {
+        StringBuilder sb = new StringBuilder("This fraction is ");
+        sb.append(this.num);
+        sb.append("/");
+        sb.append(this.den);
+        return sb.toString();
     }
 
 } // End Class
