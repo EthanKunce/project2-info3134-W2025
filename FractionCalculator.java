@@ -1,14 +1,12 @@
-
-
+import java.awt.*;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
-import java.awt.*;
 
 public class FractionCalculator extends JFrame {
     public FractionCalculator()
@@ -41,7 +39,6 @@ public class FractionCalculator extends JFrame {
 
         this.add(box);
 
-
         // -------------------box2------------------------------------
         myTextArea box2 = new myTextArea("Here is your fraction:");
         this.add(box2);
@@ -62,6 +59,21 @@ public class FractionCalculator extends JFrame {
 
 
         this.setVisible(true);
+
+        //Listener for LongOperandException
+        boxBuildFraction.addActionListener(e -> {
+            try 
+            {
+                checkOperandLen(boxDen, boxDen);
+
+            } 
+            catch (LongOperandException loe) 
+            {
+                //Displaying option pane as error
+                JOptionPane.showMessageDialog(FractionCalculator.this, loe.getMessage(), "Operand Error", JOptionPane.WARNING_MESSAGE);
+            }
+        });
+
     }
 
     //basis of each subpanel
@@ -93,7 +105,23 @@ public class FractionCalculator extends JFrame {
     }
     public static void main(String[] args) {
         FractionCalculator myWindow = new FractionCalculator();
+    }
 
+    private void checkOperandLen(JTextField numField, JTextField denField) throws LongOperandException
+    {
+        if (numField.getText().length() > 10)
+        {
+            //Reverting focus back to offending text box
+            numField.requestFocus();
 
+            throw new LongOperandException();
+        }
+
+        if (denField.getText().length() > 10)
+        {
+            denField.requestFocus();
+            
+            throw new LongOperandException();
+        }
     }
 }
