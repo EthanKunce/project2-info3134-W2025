@@ -64,7 +64,7 @@ public class FractionCalculator extends JFrame {
         boxBuildFraction.addActionListener(e -> {
             try 
             {
-                checkOperandLen(boxDen, boxDen);
+                checkOperandLen(boxNum, boxDen);
 
             } 
             catch (LongOperandException loe) 
