@@ -1,13 +1,12 @@
 
 
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.border.EmptyBorder;
 
 import java.awt.*;
 
@@ -19,36 +18,22 @@ public class FractionCalculator extends JFrame {
         this.setSize(600, 400);
         this.setLocationRelativeTo(null);
         this.setLayout(new GridLayout(1, 4));
-        // this.setLayout(new FlowLayout());
         this.setBackground(Color.gray);
 
-
-        // JLabel boxLabel = new JLabel("Enter a fraction:");
-        // this.add(boxLabel);
-
+        // -------------------box1------------------------------------
         myPane box = new myPane("Enter a fraction:");
-        // box.content.setLayout(new BoxLayout(box.content, BoxLayout.PAGE_AXIS));
-        box.content.setLayout(new GridLayout(8, 1, 20, 25));
-        // box.content.setLayout(new GridLayout(10, 1));
+        box.content.setLayout( new FlowLayout(FlowLayout.CENTER));
 
-        JLabel boxNumLabel = new JLabel("Numerator");
-        JTextField boxNum = new JTextField(1);
-        // boxNum.setBorder( new EmptyBorder(5, 5, 5, 5));
-        // boxNumLabel.setLabelFor(boxNum);
-        // boxNum.setSize();
+        JLabel boxNumLabel = new JLabel("Numerator:");
+        JTextField boxNum = new JTextField(10);
+        
         JLabel boxDenLabel = new JLabel("Denominator:");
-        boxDenLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        JTextField boxDen = new JTextField(1);
-        // boxDen.setMargin( new Insets(1, 1,1, 1));
+        JTextField boxDen = new JTextField(10);
         JButton boxBuildFraction = new JButton("Build Fraction");
-        boxBuildFraction.setAlignmentX(Component.CENTER_ALIGNMENT);
         JButton boxStartOver = new JButton("Start Over!");
-        boxStartOver.setAlignmentX(Component.CENTER_ALIGNMENT);
-
 
         box.content.add(boxNumLabel);
         box.content.add(boxNum);
-
         box.content.add(boxDenLabel);
         box.content.add(boxDen);
         box.content.add(boxBuildFraction);
@@ -56,12 +41,22 @@ public class FractionCalculator extends JFrame {
 
         this.add(box);
 
+
+        // -------------------box2------------------------------------
         myTextArea box2 = new myTextArea("Here is your fraction:");
         this.add(box2);
 
+        // -------------------box3------------------------------------
         myPane box3 = new myPane("Select an operation");
+        String items[] = { "Decimal", "Reciprocal", "Fraction1 + Fraction2", "Fraction1 x Fraction2", "Is Fraction1 = Fraction2", "Is Fraction1 > Fraction2", "Lowest terms", "Sort List" };
+        JComboBox<String> box3Drop = new JComboBox<String>( items );
+        box3Drop.setPreferredSize(new Dimension(130,26 ));
+        box3Drop.setFont( new Font("Arial", ABORT, 10));
+        box3.content.add(box3Drop);    
+
         this.add(box3);
 
+        // -------------------box4------------------------------------
         myTextArea box4 = new myTextArea("Here is your operation:");
         this.add(box4);
 
@@ -69,6 +64,7 @@ public class FractionCalculator extends JFrame {
         this.setVisible(true);
     }
 
+    //basis of each subpanel
     public class myPane extends JPanel{
         public JPanel content = new JPanel();
         public myPane(String label)
@@ -84,14 +80,15 @@ public class FractionCalculator extends JFrame {
         }
     }
 
+    //basis of panels 2 &
     public class myTextArea extends myPane{
         public TextArea display;
         public myTextArea(String label)
         {
             super(label);
-            
-            display = new TextArea("", 1, 1,TextArea.SCROLLBARS_NONE );
-            this.add(display);
+            this.content.setLayout( new FlowLayout()) ;
+            display = new TextArea("", 20, 6,TextArea.SCROLLBARS_NONE );
+            this.content.add(display);
         }
     }
     public static void main(String[] args) {
