@@ -1,6 +1,6 @@
 public class LongOperandException extends Exception {
     
-    public LongOperandException(String e)
+    public LongOperandException()
     {
         super("Warning: Operand entered exceeds int capacity.");
     }
