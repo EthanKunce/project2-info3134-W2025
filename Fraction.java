@@ -15,16 +15,18 @@ public class Fraction implements Comparable<Fraction>{
     private int num;
     private int den;
 
-    
-
     public Fraction() {
         this.num = 1;
         this.den = 1;
     }
 
     
-    public Fraction(int num, int den) {
-        this();
+    public Fraction(int num, int den) throws DivisionByZeroException
+    {
+        if (den == 0) {
+            throw new DivisionByZeroException();
+        }
+        // this();
         this.num = num;
         this.den = den;
     }
@@ -38,7 +40,12 @@ public class Fraction implements Comparable<Fraction>{
     public int getDen() {
         return den;
     }
-    public void setDen(int den) {
+    public void setDen(int den) throws DivisionByZeroException
+    {
+        if (den == 0) {
+            throw new DivisionByZeroException();
+        }
+
         this.den = den;
     }
 
