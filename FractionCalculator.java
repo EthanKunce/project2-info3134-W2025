@@ -117,13 +117,11 @@ public class FractionCalculator extends JFrame {
         {
             super(label);
             this.content.setLayout( new FlowLayout()) ;
-            display = new TextArea("", 20, 6,TextArea.SCROLLBARS_NONE );
+            display = new TextArea("", 20, 12,TextArea.SCROLLBARS_NONE );
             this.content.add(display);
         }
     }
-    public static void main(String[] args) {
-        FractionCalculator myWindow = new FractionCalculator();
-    }
+
 
     //Length method for operands
     private void checkOperandLen(JTextField numField, JTextField denField) throws LongOperandException
@@ -158,5 +156,9 @@ public class FractionCalculator extends JFrame {
             denField.requestFocus();
             throw new EmptyOperandException();
         }
+    }
+
+    public static void main(String[] args) {
+        FractionCalculator myWindow = new FractionCalculator();
     }
 }
