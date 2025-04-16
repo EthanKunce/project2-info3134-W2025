@@ -1,4 +1,6 @@
 import java.awt.*;
+import java.util.ArrayList;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -9,6 +11,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class FractionCalculator extends JFrame {
+
+    public ArrayList<Fraction> fracList;
+
     public FractionCalculator()
     {
         super("Fraction Calculator");
@@ -18,16 +23,24 @@ public class FractionCalculator extends JFrame {
         this.setLayout(new GridLayout(1, 4));
         this.setBackground(Color.gray);
 
+        this.fracList = new ArrayList<Fraction>();
+        
         // -------------------box1------------------------------------
         myPane box = new myPane("Enter a fraction:");
         box.content.setLayout( new FlowLayout(FlowLayout.CENTER));
 
         JLabel boxNumLabel = new JLabel("Numerator:");
         JTextField boxNum = new JTextField(10);
-        
+
+        // denominator textfield
         JLabel boxDenLabel = new JLabel("Denominator:");
         JTextField boxDen = new JTextField(10);
+
+        // Numerator textfield
         JButton boxBuildFraction = new JButton("Build Fraction");
+        //Listener for the exceptions
+
+
         JButton boxStartOver = new JButton("Start Over!");
 
         box.content.add(boxNumLabel);
@@ -60,7 +73,8 @@ public class FractionCalculator extends JFrame {
 
         this.setVisible(true);
 
-        //Listener for the exceptions
+        // --------------Action Listeners-----------------------------
+
         boxBuildFraction.addActionListener(e -> {
             try 
             {
@@ -72,7 +86,11 @@ public class FractionCalculator extends JFrame {
                 int tempDen = Integer.parseInt(boxDen.getText());
 
                 //Test call for dze
-                Fraction frac = new Fraction(tempNum, tempDen);
+
+                this.fracList.add( new Fraction( tempNum, tempDen ));
+
+                // prints the most recently added element
+                box2.printFrac(fracList.get(fracList.size()-1));
             } 
             catch (LongOperandException loe) 
             {
@@ -89,8 +107,26 @@ public class FractionCalculator extends JFrame {
                 JOptionPane.showMessageDialog(FractionCalculator.this, dze.getMessage(), "Divison By Zero Error", JOptionPane.WARNING_MESSAGE);
                 boxDen.requestFocus();  
             }
+            catch (NumberFormatException nfe)
+            {
+                JOptionPane.showMessageDialog(FractionCalculator.this, nfe.getMessage(), "Divison By Zero Error", JOptionPane.WARNING_MESSAGE);
+            }
+            catch (Exception ex)
+            {
+                JOptionPane.showMessageDialog(FractionCalculator.this, ex.getMessage(), "General Exception", JOptionPane.WARNING_MESSAGE);
+            }
+            finally {
+                boxNum.setText("");
+                boxDen.setText("");
+            }
+
         });
 
+        boxStartOver.addActionListener( (e) -> {
+            fracList.clear();
+            box2.display.setText("");
+            box4.display.setText("");
+        });
 
     }
 
@@ -120,9 +156,17 @@ public class FractionCalculator extends JFrame {
             display = new TextArea("", 20, 12,TextArea.SCROLLBARS_NONE );
             this.content.add(display);
         }
+
+        public void printFrac(Fraction frac)
+        { 
+            this.display.setText(frac.toString().substring(17));
+        }
+
     }
 
 
+    // Why are we check the same thing on both parameters? Can we not just call the function again?
+    // making the parameters and checks more generic reduces codes and increases reusability. 
     //Length method for operands
     private void checkOperandLen(JTextField numField, JTextField denField) throws LongOperandException
     {
@@ -133,7 +177,7 @@ public class FractionCalculator extends JFrame {
 
             throw new LongOperandException();
         }
-
+        
         if (denField.getText().length() > 10)
         {
             denField.requestFocus();
@@ -142,6 +186,8 @@ public class FractionCalculator extends JFrame {
         }
     }
 
+    // Why are we check the same thing on both parameters? Can we not just call the function again?
+    // making the parameters and checks more generic reduces codes and increases reusability. 
     //Check method for empty operands
     private void checkEmptyOperand(JTextField numField, JTextField denField) throws EmptyOperandException
     {
