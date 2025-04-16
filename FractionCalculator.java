@@ -9,6 +9,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class FractionCalculator extends JFrame {
+
+    private java.util.ArrayList<Fraction> fracList = new java.util.ArrayList<>();
+
     public FractionCalculator()
     {
         super("Fraction Calculator");
@@ -73,6 +76,10 @@ public class FractionCalculator extends JFrame {
 
                 //Test call for dze
                 Fraction frac = new Fraction(tempNum, tempDen);
+
+                fracList.add(frac);
+                box2.display.append(frac.toString() + '\n');
+
             } 
             catch (LongOperandException loe) 
             {
@@ -88,6 +95,103 @@ public class FractionCalculator extends JFrame {
                 //STUB: DZE is extending Runtime for now
                 JOptionPane.showMessageDialog(FractionCalculator.this, dze.getMessage(), "Divison By Zero Error", JOptionPane.WARNING_MESSAGE);
                 boxDen.requestFocus();  
+            }
+        });
+
+        //Start over box actionlistener
+        boxStartOver.addActionListener(e -> {
+            boxNum.setText("");
+            boxDen.setText("");
+            box2.display.setText("");
+            box4.display.setText("");
+            fracList.clear();
+        });
+
+        box3Drop.addActionListener(e -> {
+            String selection = (String) box3Drop.getSelectedItem();
+
+            // if (fracList.isEmpty())
+            // {
+            //     JOptionPane.showMessageDialog
+            // }
+
+            Fraction last = fracList.get(fracList.size() - 1);
+            Fraction result;
+
+            switch(selection)
+            {
+                case "Decimal":
+                    box4.display.setText(String.valueOf(last.toDecimal()));
+                    break;
+
+                case "Reciprocal":
+                    result = last.toReciprocal();
+                    box4.display.setText(result.toString());
+                    break;
+
+                case "Fraction1 + Fraction2":
+                //Handling error case
+                    if (fracList.size() < 2)
+                    {
+                        JOptionPane.showMessageDialog(this, "Two fractions are required!");
+                        return;
+                    }
+                    result = fracList.get(fracList.size() - 2).add(last);
+                    box4.display.setText(result.toString());
+                    boxNum.requestFocus();
+                    break;
+
+                case "Fraction1 x Fraction2":
+                    if (fracList.size() < 2)
+                    {
+                        JOptionPane.showMessageDialog(this, "Two fractions are required!");
+                        return;
+                    }
+                    result = fracList.get(fracList.size() - 2).multiply(last);
+                    box4.display.setText(result.toString());
+                    break;
+
+                case "Is Fraction1 = Fraction2":
+                    if (fracList.size() < 2)
+                    {
+                        JOptionPane.showMessageDialog(this, "Two fractions are required!");
+                        return;
+                    }
+                    boolean equ = fracList.get(fracList.size() - 2).equals(last);
+                    box4.display.setText("Equal? " + equ);
+                    break;
+                
+                case "Is Fraction1 > Fraction2":
+                    if (fracList.size() < 2)
+                    {
+                        JOptionPane.showMessageDialog(this, "Two fractions are required!");
+                        return;
+                    }
+                    boolean grth = fracList.get(fracList.size() - 2).greaterThan(last);
+                    box4.display.setText("Greater? " + grth);
+                    break;
+                
+                case "Lowest terms":
+                    box2.display.setText("");
+                    for (int i = 0; i < fracList.size(); i++)
+                    {
+                        Fraction reduced = fracList.get(i).lowestTerms();
+                        fracList.set(i , reduced);
+                        box2.display.append(reduced.toString() + "\n");
+                    }
+                    box4.display.setText("Reduced to lowest terms.");
+                    break;
+                
+                case "Sort List":
+                    java.util.Collections.sort(fracList);
+                    box2.display.setText("");
+                    box4.display.setText("Sorted List: ");
+                    for (Fraction f : fracList) 
+                    {
+                        box2.display.append(f.toString() + "\n");
+                        box4.display.append(f.toString() + "\n");
+                    }
+                    break;
             }
         });
 
