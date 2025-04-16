@@ -4,9 +4,13 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
 
 public class FractionCalculator extends JFrame {
 
@@ -63,6 +67,32 @@ public class FractionCalculator extends JFrame {
 
         this.setVisible(true);
 
+        //Menubar
+        JMenuBar mBar = new JMenuBar();
+        //-----operations + help-----------//
+        JMenu opMenu = new JMenu("Operations");
+        JMenu helpMenu = new JMenu("Help");
+
+        //Operations Menu items
+        String[] menuOpers = { "Decimal", "Reciprocal", "Fraction1 + Fraction2", "Fraction1 x Fraction2", "Is Fraction1 = Fraction2", "Is Fraction1 > Fraction2", "Lowest terms", "Sort List"};
+
+        for (String opers : menuOpers)
+        {
+            JMenuItem item = new JMenuItem(opers);
+            item.addActionListener(e -> box3Drop.setSelectedItem(opers));
+            opMenu.add(item);
+        }
+
+        //help menu items
+        JMenuItem aboutCoders = new JMenuItem("About");
+        aboutCoders.addActionListener(e -> JOptionPane.showMessageDialog(this, "Created by Ethan Kunce and Hani Hijazi!", "About", JOptionPane.INFORMATION_MESSAGE));
+        helpMenu.add(aboutCoders);
+
+        //Adding the menu bars
+        mBar.add(opMenu);
+        mBar.add(helpMenu);
+        this.setJMenuBar(mBar);
+
         //Listener for the exceptions
         boxBuildFraction.addActionListener(e -> {
             try 
@@ -109,11 +139,6 @@ public class FractionCalculator extends JFrame {
 
         box3Drop.addActionListener(e -> {
             String selection = (String) box3Drop.getSelectedItem();
-
-            // if (fracList.isEmpty())
-            // {
-            //     JOptionPane.showMessageDialog
-            // }
 
             Fraction last = fracList.get(fracList.size() - 1);
             Fraction result;
