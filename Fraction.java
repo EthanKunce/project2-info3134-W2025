@@ -105,8 +105,13 @@ public class Fraction implements Comparable<Fraction>{
 
     @Override
     public int compareTo(Fraction o) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'compareTo'");
+        if (this.equals(o))
+            return 0;
+
+        if (this.greaterThan(o))
+            return 1;
+        else   
+            return -1;
     }
 
     @Override
