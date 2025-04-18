@@ -20,13 +20,12 @@ public class Fraction implements Comparable<Fraction>{
         this.den = 1;
     }
 
-    
     public Fraction(int num, int den) throws DivisionByZeroException
     {
         if (den == 0) {
             throw new DivisionByZeroException();
         }
-        // this();
+
         this.num = num;
         this.den = den;
     }
@@ -105,8 +104,13 @@ public class Fraction implements Comparable<Fraction>{
 
     @Override
     public int compareTo(Fraction o) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'compareTo'");
+        if (this.equals(o))
+            return 0;
+
+        if (this.greaterThan(o))
+            return 1;
+        else   
+            return -1;
     }
 
     @Override
@@ -117,7 +121,7 @@ public class Fraction implements Comparable<Fraction>{
         sb.append("/");
         sb.append(this.den);
         return sb.toString();
-        //Test comment 
+
     }
 
 } // End Class
