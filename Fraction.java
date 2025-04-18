@@ -20,13 +20,12 @@ public class Fraction implements Comparable<Fraction>{
         this.den = 1;
     }
 
-    
     public Fraction(int num, int den) throws DivisionByZeroException
     {
         if (den == 0) {
             throw new DivisionByZeroException();
         }
-        // this();
+
         this.num = num;
         this.den = den;
     }
@@ -122,7 +121,7 @@ public class Fraction implements Comparable<Fraction>{
         sb.append("/");
         sb.append(this.den);
         return sb.toString();
-        //Test comment 
+
     }
 
 } // End Class
